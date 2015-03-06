@@ -5,25 +5,27 @@
 " ==========================================================
 " Setup Bundles - Vundle is awesome! Thanks gmarik
 " ==========================================================
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 "  " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " Github Repos
-Bundle 'scrooloose/nerdtree'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'majutsushi/tagbar'
-Bundle 'wincent/Command-T'
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+" Plugin 'fholgado/minibufexpl.vim'
+" Plugin 'davidhalter/jedi-vim'
+" Plugin 'kien/ctrlp.vim'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'pep8'
 
-Bundle 'AutoComplPop'
-Bundle 'pep8'
+call vundle#end()
+filetype plugin indent on
 
 " Other Repos
 
@@ -39,72 +41,111 @@ map <leader>v :sp ~/.vimrc<CR><C-W>_
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " ctrl-jklm switch between buffers
-map <c-l> :bn<CR>
+map <c-l> :bn<CR> 
 map <c-h> :bp<CR>
 
 " Open NerdTree
 map <leader>n :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 
-" Open C-Tag List
-map <leader>T :TagbarToggle<CR>
+" Airline Options
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+let g:airline#extensions#tabline#enabled = 1
+" Fixes single buffer bug with Airline
+set laststatus=2
+
 
 " PEP8
+
 let g:pep8_map='<leader>8'
 
-" ==========================================================
-" Pathogen - Allows us to organize our vim plugins
-" ==========================================================
-" Load pathogen with docs for all plugins
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 
 " ==========================================================
+
 " Basic Settings
+
 " ==========================================================
+
 syntax on                     " syntax highlighing
+
 filetype on                   " try to detect filetypes
+
 filetype plugin indent on     " enable loading indent file for filetype
+
 filetype plugin on
+
 set number                    " Display line numbers
+
 set hidden                    " Hide file buffers
+
 set numberwidth=1             " using only 1 column (and 1 space) while possible
+
 set background=dark           " We are using dark background in vim
+
 set title                     " show title in console title bar
+
 set wildmenu                  " Menu completion in command mode on <Tab>
+
 set wildmode=full             " <Tab> cycles between all matching choices.
 
+
 if has('gui_running')
+
     colorscheme liquidcarbon
+
     set columns=124
+
     set lines=40
+
 endif
+
 
 " Ignore these files when completing
+
 set wildignore+=*.o,*.obj,.git,*.pyc
 
+
 """ Insert completion
+
 " don't select first item, follow typing in autocomplete
+
 set completeopt=menuone,longest,preview
+
 set pumheight=6             " Keep a small completion window
 
+
 " show a line at column 79
+
  if exists("&colorcolumn")
+
     set colorcolumn=80
+
 endif
 
+
 """ Moving Around/Editing
+
 set cursorline              " have a line indicate the cursor location
+
 set ruler                   " show the cursor position all the time
+
 set nostartofline           " Avoid moving cursor to BOL when jumping around
+
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
+
 set scrolloff=3             " Keep 3 context lines above and below the cursor
+
 set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
+
 set showmatch               " Briefly jump to a paren once it's balanced
+
 set nowrap                  " don't wrap text
+
 set linebreak               " don't wrap textin the middle of a word
+
 " set autoindent              " always set autoindenting on
+
 " set smartindent             " use smart indent if there is no indent file
 set tabstop=4               " <tab> inserts 4 spaces 
 set shiftwidth=4            " but an indent level is 2 spaces wide.
