@@ -18,9 +18,8 @@ Plugin 'gmarik/vundle'
 " Github Repos
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
-" Plugin 'fholgado/minibufexpl.vim'
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'kien/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'kien/ctrlp.vim'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'pep8'
 
@@ -45,7 +44,7 @@ map <c-l> :bn<CR>
 map <c-h> :bp<CR>
 
 " Open NerdTree
-map <leader>n :NERDTreeToggle<CR>
+map <leader>N :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 
 " Airline Options
@@ -55,6 +54,8 @@ let g:airline#extensions#tabline#enabled = 1
 " Fixes single buffer bug with Airline
 set laststatus=2
 
+" JEDI
+let g:jedi#use_tabs_not_buffers = 0
 
 " PEP8
 
