@@ -51,6 +51,7 @@ let g:NERDTreeDirArrows=0
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
 let g:airline#extensions#tabline#enabled = 1
+
 " Fixes single buffer bug with Airline
 set laststatus=2
 
@@ -58,95 +59,65 @@ set laststatus=2
 let g:jedi#use_tabs_not_buffers = 0
 
 " PEP8
-
 let g:pep8_map='<leader>8'
 
-
 " ==========================================================
-
 " Basic Settings
-
 " ==========================================================
 
 syntax on                     " syntax highlighing
-
 filetype on                   " try to detect filetypes
-
 filetype plugin indent on     " enable loading indent file for filetype
-
 filetype plugin on
 
 set number                    " Display line numbers
-
 set hidden                    " Hide file buffers
-
 set numberwidth=1             " using only 1 column (and 1 space) while possible
-
 set background=dark           " We are using dark background in vim
-
 set title                     " show title in console title bar
-
 set wildmenu                  " Menu completion in command mode on <Tab>
-
 set wildmode=full             " <Tab> cycles between all matching choices.
 
+" ============================================================
+" Make Vim work with watchdog, guard, and sniffer
+" ============================================================
+set nobackup
+set noswapfile
+set nowritebackup
 
 if has('gui_running')
-
     colorscheme liquidcarbon
-
     set columns=124
-
     set lines=40
-
 endif
 
-
 " Ignore these files when completing
-
 set wildignore+=*.o,*.obj,.git,*.pyc
 
-
 """ Insert completion
-
 " don't select first item, follow typing in autocomplete
-
 set completeopt=menuone,longest,preview
-
 set pumheight=6             " Keep a small completion window
 
 
 " show a line at column 79
-
  if exists("&colorcolumn")
-
     set colorcolumn=80
-
 endif
 
 
 """ Moving Around/Editing
-
 set cursorline              " have a line indicate the cursor location
-
 set ruler                   " show the cursor position all the time
-
 set nostartofline           " Avoid moving cursor to BOL when jumping around
-
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
-
 set scrolloff=3             " Keep 3 context lines above and below the cursor
-
 set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
-
 set showmatch               " Briefly jump to a paren once it's balanced
-
 set nowrap                  " don't wrap text
-
 set linebreak               " don't wrap textin the middle of a word
 
 " set autoindent              " always set autoindenting on
-
 " set smartindent             " use smart indent if there is no indent file
 set tabstop=4               " <tab> inserts 4 spaces 
 set shiftwidth=4            " but an indent level is 2 spaces wide.
