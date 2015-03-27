@@ -20,6 +20,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/Liquid-Carbon'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'pep8'
 
