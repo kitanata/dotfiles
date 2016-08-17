@@ -189,10 +189,6 @@ let g:pyflakes_use_quickfix = 0
 " Jedi Popup on Dot
 let g:jedi#popup_on_dot = 0
 
-" Objective-J
-au BufRead *.j set syntax=objj
-au BufEnter *.j set syntax=objj
-
 " Ruby, Coffee, HAML, SASS (Facio)
 au FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=if,else,while,do,for,switch,case
 au FileType scss setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=if,else,while,do,for,switch,case
