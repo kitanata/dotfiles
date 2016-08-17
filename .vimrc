@@ -5,25 +5,33 @@
 " ==========================================================
 " Setup Bundles - Vundle is awesome! Thanks gmarik
 " ==========================================================
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 "  " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " Github Repos
-Bundle 'scrooloose/nerdtree'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'majutsushi/tagbar'
-Bundle 'wincent/Command-T'
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/Liquid-Carbon'
+Plugin 'godlygeek/tabular'
+Plugin 'rizzatti/dash.vim'
+Plugin 'joonty/vdebug'
+Plugin 'sheerun/vim-polyglot'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'pep8'
 
-Bundle 'AutoComplPop'
-Bundle 'pep8'
+call vundle#end()
+filetype plugin indent on
+
+set guifont=Anonymous_Pro:h16
 
 " Other Repos
 
@@ -39,34 +47,61 @@ map <leader>v :sp ~/.vimrc<CR><C-W>_
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " ctrl-jklm switch between buffers
-map <c-l> :bn<CR>
+map <c-l> :bn<CR> 
 map <c-h> :bp<CR>
 
+map <s-l> :tabn<CR>
+map <s-h> :tabp<CR>
+
 " Open NerdTree
-map <leader>n :NERDTreeToggle<CR>
+map <leader>N :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 
-" Open C-Tag List
-map <leader>T :TagbarToggle<CR>
+" Airline Options
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+let g:airline#extensions#tabline#enabled = 1
+
+" Fixes single buffer bug with Airline
+set laststatus=2
+
+" JEDI
+let g:jedi#use_tabs_not_buffers = 0
 
 " PEP8
 let g:pep8_map='<leader>8'
 
-" ==========================================================
-" Pathogen - Allows us to organize our vim plugins
-" ==========================================================
-" Load pathogen with docs for all plugins
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" Markdown Preview
+let vim_markdown_preview_hotkey='<leader>m'
+let vim_markdown_preview_github=1
+
+" Markdown TableFormat w/ Tabular
+map <leader>t :TableFormat<CR>
+
+" Tabular Tables
+" inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+" 
+" function! s:align()
+"   let p = '^\s*|\s.*\s|\s*$'
+"   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+"     let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+"     let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+"     Tabularize/|/l1
+"     normal! 0
+"     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+"   endif
+" endfunction
+"
 
 " ==========================================================
 " Basic Settings
 " ==========================================================
+
 syntax on                     " syntax highlighing
 filetype on                   " try to detect filetypes
 filetype plugin indent on     " enable loading indent file for filetype
 filetype plugin on
+
 set number                    " Display line numbers
 set hidden                    " Hide file buffers
 set numberwidth=1             " using only 1 column (and 1 space) while possible
@@ -74,6 +109,13 @@ set background=dark           " We are using dark background in vim
 set title                     " show title in console title bar
 set wildmenu                  " Menu completion in command mode on <Tab>
 set wildmode=full             " <Tab> cycles between all matching choices.
+
+" ============================================================
+" Make Vim work with watchdog, guard, and sniffer
+" ============================================================
+set nobackup
+set noswapfile
+set nowritebackup
 
 if has('gui_running')
     colorscheme liquidcarbon
@@ -89,10 +131,12 @@ set wildignore+=*.o,*.obj,.git,*.pyc
 set completeopt=menuone,longest,preview
 set pumheight=6             " Keep a small completion window
 
+
 " show a line at column 79
  if exists("&colorcolumn")
     set colorcolumn=80
 endif
+
 
 """ Moving Around/Editing
 set cursorline              " have a line indicate the cursor location
@@ -104,6 +148,7 @@ set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
 set showmatch               " Briefly jump to a paren once it's balanced
 set nowrap                  " don't wrap text
 set linebreak               " don't wrap textin the middle of a word
+
 " set autoindent              " always set autoindenting on
 " set smartindent             " use smart indent if there is no indent file
 set tabstop=4               " <tab> inserts 4 spaces 
@@ -141,6 +186,8 @@ au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smart
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
+" Jedi Popup on Dot
+let g:jedi#popup_on_dot = 0
 
 " Objective-J
 au BufRead *.j set syntax=objj
@@ -151,19 +198,7 @@ au FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=
 au FileType scss setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=if,else,while,do,for,switch,case
 au Filetype eco setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=if,else,while,do,for,switch,case
 au Filetype haml setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=#,. cinkeys-=0# indentkeys-=0#
+au Filetype javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 cindent cinwords=#,. cinkeys-=0# indentkeys-=0#
 
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '--include-vars',
-        \ 'kinds' : [
-        \ 'f:functions:0',
-        \ 'o:object:1',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-endif
+" YAML Indent
+au FileType yml setlocal shiftwidth=2 tabstop=2 softtabstop=2 indentkeys-=0#

@@ -130,11 +130,20 @@ fi
 } >/dev/null 2>/dev/null
 
 
+#YAY Git Completion
+if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
+. `brew --prefix`/etc/bash_completion.d/git-completion.bash
+fi
+
+if [ -f `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
+    . `brew --prefix`/etc/bash_completion.d/git-prompt.sh
+fi
+
 ##################################################
 # This bashrc's current prompt		 	 #
 ##################################################
 
-PS1='\[\033]0;\w\007\]\[\e[35;1m\]\u\[\e[0m\]\[\e[32m\]@\h\[\e[34m\]\w $(__git_ps1 " (%s)")\[\e[33m\]\$ \[\e[0m\]'	# purple, green, blue prompt w/default black & dir title
+PS1='\[\033]0;\w\007\]\[\e[35;1m\]\u\[\e[0m\]\[\e[32m\]@\h\[\e[36m\]\w $(__git_ps1 " (%s)")\[\e[33m\]\$ \[\e[0m\]'	# purple, green, blue prompt w/default black & dir title
 
 
 
@@ -202,14 +211,10 @@ PS1='\[\033]0;\w\007\]\[\e[35;1m\]\u\[\e[0m\]\[\e[32m\]@\h\[\e[34m\]\w $(__git_p
 # PS1="\u@\h [\w] \$ "										# simple prompt with directory (black)
 # PS1="\u `tty | sed 's/\/dev\///'` [\W] \$ "							# prompt with brief info (black)
 
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-# Cappucinno PATH
-export PATH="/usr/local/narwhal/bin:$PATH"
-export CAPP_BUILD="/home/raymond/Downloads/capp/Starter/Build"
+export NVM_DIR="/Users/raymond/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-
-#YAY Git Completion
-source ~/.git-completion.sh
+# PHP Bullshit on OSX
+export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
